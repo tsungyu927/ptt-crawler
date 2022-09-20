@@ -1,0 +1,19 @@
+{
+  "name": "ptt-crawler",
+  "version": "1.0.0",
+  "description": "A web crawler module to fetch data from PTT",
+  "main": "index.js",
+  "author": "tsungyu927",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "devDependencies": {
+    "eslint": "^8.23.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "2.25.2"
+  },
+  "dependencies": {
+    "puppeteer": "^18.0.3"
+  }
+}
