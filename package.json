@@ -6,7 +6,7 @@
   "author": "tsungyu927",
   "license": "MIT",
   "scripts": {
-    "dev": "node index.js"
+    "dev": "node example/demo.js"
   },
   "devDependencies": {
     "eslint": "^8.23.1",
