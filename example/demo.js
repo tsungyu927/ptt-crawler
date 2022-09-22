@@ -4,8 +4,11 @@ async function runCrawler() {
   // *** Initialize ***
   await crawler.init();
 
+  // *** Get Result ***
+  await crawler.getList();
+
   // ***   Close   ***
-  await crawler.close();
+  // await crawler.close();
 }
 
 runCrawler();
