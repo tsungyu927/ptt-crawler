@@ -3,7 +3,7 @@ function scrapingPrev() {
   return prevResult.href;
 }
 
-function scrapingPage() {
+function scrapingPage(options) {
   /**
    * 抓取title & link
    * fetch the title & link
@@ -63,6 +63,8 @@ function scrapingPage() {
   /**
    * 過濾 已刪除文章(author === '-') & 公告(mark !== '')，並整理成一個array
    * filter deleted and announcement articles, and clean up as an array
+   *
+   * 過濾 帥哥or正妹 (如果使用者有選擇的話)
    */
   const result = titleArr
     .map((_, index) => ({
@@ -73,7 +75,21 @@ function scrapingPage() {
       like: likeArr[index],
       mark: markArr[index],
     }))
-    .filter((val) => val.author !== '-' && val.mark === '');
+    .filter((val) => {
+      if (val.author === '-') {
+        return false;
+      }
+      if (val.mark !== '') {
+        return false;
+      }
+      if (options.onlyGirls && /\[帥哥\]/.test(val.title)) {
+        return false;
+      }
+      if (options.onlyBoys && /\[正妹\]/.test(val.title)) {
+        return false;
+      }
+      return true;
+    });
 
   return result;
 }

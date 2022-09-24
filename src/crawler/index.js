@@ -57,6 +57,7 @@ async function getList(options) {
     pages = 1,
     board = 'Beauty',
     onlyGirls = false,
+    onlyBoys = false,
   } = options;
 
   const articles = [];
@@ -66,13 +67,13 @@ async function getList(options) {
     await navigateToPage(`https://www.ptt.cc/bbs/${board}/index.html`);
 
     // fetch first page
-    articles.push(...await page.evaluate(scrapingPage));
+    articles.push(...await page.evaluate(scrapingPage, { onlyGirls, onlyBoys }));
 
     for (let i = 1; i < pages; i += 1) {
       // fetch rest pages the user want
       const prev = await page.evaluate(scrapingPrev);
       await navigateToPage(prev);
-      articles.push(...await page.evaluate(scrapingPage));
+      articles.push(...await page.evaluate(scrapingPage, { onlyGirls, onlyBoys }));
     }
   } catch (err) {
     console.log(err);
