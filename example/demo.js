@@ -5,10 +5,19 @@ const crawler = require('../index');
   await crawler.init();
 
   // *** Get Result ***
-  await crawler.getList({
-    pages: 3,
+  const lists = await crawler.getList({
+    pages: 1,
     board: 'Beauty',
+    onlyGirls: true,
   });
+
+  // *** Get Content ***
+  const listWithContent = await crawler.getContent(lists, {
+    getComment: false,
+    getPicture: true,
+  });
+
+  console.log(listWithContent);
 
   // ***   Close   ***
   // await crawler.close();
