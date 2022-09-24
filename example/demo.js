@@ -1,4 +1,5 @@
 const crawler = require('../index');
+const saver = require('../src/saver');
 
 (async () => {
   // *** Initialize ***
@@ -8,7 +9,7 @@ const crawler = require('../index');
   const lists = await crawler.getList({
     pages: 1,
     board: 'Beauty',
-    getSpecificDate: 'today',
+    // getSpecificDate: 'today',
     onlyGirls: true, // only for Beauty board
     onlyBoys: false, // only for Beauty board
   });
@@ -21,6 +22,9 @@ const crawler = require('../index');
 
   console.log(listWithContent);
 
+  // *** Save to Google Sheet ***
+  await saver.addToGoogleSheet(listWithContent);
+
   // ***   Close   ***
-  // await crawler.close();
+  await crawler.close();
 })();
