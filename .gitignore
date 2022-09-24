@@ -56,7 +56,6 @@ typings/
 
 # dotenv environment variables file
 .env
-.env.example
 
 # TypeScript compiled directory
 dist
