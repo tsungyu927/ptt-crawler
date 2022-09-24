@@ -6,7 +6,7 @@
   "author": "tsungyu927",
   "license": "MIT",
   "scripts": {
-    "dev": "node index.js"
+    "dev": "node example/demo.js"
   },
   "devDependencies": {
     "eslint": "^8.23.1",
@@ -14,6 +14,8 @@
     "eslint-plugin-import": "2.25.2"
   },
   "dependencies": {
+    "dotenv": "^16.0.2",
+    "google-spreadsheet": "^3.3.0",
     "puppeteer": "^18.0.3"
   }
 }
