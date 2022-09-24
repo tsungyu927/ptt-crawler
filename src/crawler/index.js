@@ -56,6 +56,7 @@ async function getList(options) {
   const {
     pages = 1,
     board = 'Beauty',
+    getSpecificDate = '',
     onlyGirls = false,
     onlyBoys = false,
   } = options;
@@ -66,14 +67,38 @@ async function getList(options) {
     // navigate to target page
     await navigateToPage(`https://www.ptt.cc/bbs/${board}/index.html`);
 
-    // fetch first page
-    articles.push(...await page.evaluate(scrapingPage, { onlyGirls, onlyBoys }));
+    if (!getSpecificDate) {
+      // fetch according to the pages
 
-    for (let i = 1; i < pages; i += 1) {
-      // fetch rest pages the user want
-      const prev = await page.evaluate(scrapingPrev);
-      await navigateToPage(prev);
-      articles.push(...await page.evaluate(scrapingPage, { onlyGirls, onlyBoys }));
+      // fetch first page
+      const firstResult = await page.evaluate(scrapingPage, { onlyGirls, onlyBoys });
+      articles.push(...firstResult.result);
+
+      for (let i = 1; i < pages; i += 1) {
+        // fetch rest pages the user want
+        const prev = await page.evaluate(scrapingPrev);
+        await navigateToPage(prev);
+
+        const fetchResult = await page.evaluate(scrapingPage, { onlyGirls, onlyBoys });
+        articles.push(...fetchResult.result);
+      }
+    } else {
+      const nowDate = new Date();
+      // fetch specific date
+      while (true) {
+        const date = getSpecificDate === 'today' ? `${nowDate.getMonth() + 1}/${nowDate.getDate()}` : getSpecificDate;
+        const fetchResult = await page.evaluate(scrapingPage, { onlyGirls, onlyBoys, date });
+        articles.push(...fetchResult.result);
+
+        if (fetchResult.stopFetch) {
+          // find the wrong date, break the while
+          break;
+        }
+
+        // navigate to the next page
+        const prev = await page.evaluate(scrapingPrev);
+        await navigateToPage(prev);
+      }
     }
   } catch (err) {
     console.log(err);

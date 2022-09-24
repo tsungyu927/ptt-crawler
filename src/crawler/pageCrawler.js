@@ -4,6 +4,8 @@ function scrapingPrev() {
 }
 
 function scrapingPage(options) {
+  // 判斷是否要命令上層func停止爬取
+  let stopFetch = false;
   /**
    * 抓取title & link
    * fetch the title & link
@@ -52,14 +54,6 @@ function scrapingPage(options) {
   const likeResult = document.querySelectorAll(likeSelectorAll);
   const likeArr = Array.from(likeResult).map((val) => val.innerText);
 
-  const resultLength = [
-    titleArr.length,
-    authorArr.length,
-    linkArr.length,
-    dateArr.length,
-    markArr.length,
-    likeArr.length,
-  ];
   /**
    * 過濾 已刪除文章(author === '-') & 公告(mark !== '')，並整理成一個array
    * filter deleted and announcement articles, and clean up as an array
@@ -88,10 +82,17 @@ function scrapingPage(options) {
       if (options.onlyBoys && /\[正妹\]/.test(val.title)) {
         return false;
       }
+      if (options.date && options.date !== val.date) {
+        stopFetch = true;
+        return false;
+      }
       return true;
     });
 
-  return result;
+  return {
+    stopFetch,
+    result,
+  };
 }
 
 module.exports = {

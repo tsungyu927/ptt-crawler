@@ -8,8 +8,9 @@ const crawler = require('../index');
   const lists = await crawler.getList({
     pages: 1,
     board: 'Beauty',
-    onlyGirls: false, // only for Beauty board
-    onlyBoys: true, // only for Beauty board
+    getSpecificDate: 'today',
+    onlyGirls: true, // only for Beauty board
+    onlyBoys: false, // only for Beauty board
   });
 
   // *** Get Content ***
