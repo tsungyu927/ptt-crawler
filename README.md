@@ -31,6 +31,6 @@ To fetch whatever you want from PTT.
 - [x] 爬取今日的文章
 - [x] 爬取圖片
 - [ ] 爬取內文(目前只能爬取link & image link)
-- [ ] 儲存到google sheet
-- [ ] 新增node-cron排程
-    - [ ] 部屬到server (TBC firebase function)
+- [x] 儲存到google sheet
+- [x] 新增node-cron排程
+    - [x] 部屬到server (TBC firebase function)
